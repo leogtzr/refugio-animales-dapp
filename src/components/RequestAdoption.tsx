@@ -41,15 +41,15 @@ export default function RequestAdoption({ animalId }: { animalId: number }) {
 
     return (
         <div className="mt-2">
-            <input name="name" placeholder="Nombre" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1" />
-            <input name="email" placeholder="Email" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1" />
-            <input name="phone" placeholder="Teléfono" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1" />
-            <input name="address" placeholder="Dirección" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1" />
-            <input name="experience" placeholder="Experiencia" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1" />
+            <input name="name" placeholder="Nombre" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1 text-black" />
+            <input name="email" placeholder="Email" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1 text-black" />
+            <input name="phone" placeholder="Teléfono" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1 text-black" />
+            <input name="address" placeholder="Dirección" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1 text-black" />
+            <input name="experience" placeholder="Experiencia" onChange={handleChange} className="border px-2 py-1 rounded mr-2 mb-1 text-black" />
             <button
                 onClick={request}
                 disabled={loading}
-                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 mt-2"
             >
                 {loading ? "Enviando..." : "Solicitar Adopción"}
             </button>

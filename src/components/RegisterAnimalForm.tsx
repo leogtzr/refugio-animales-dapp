@@ -84,12 +84,17 @@ export default function RegisterAnimalForm() {
     };
 
     if (isOwner === false) {
+        /*
         return (
             <div className="border rounded p-4 mb-8 bg-yellow-50 text-yellow-800">
                 <strong>Solo el owner del contrato puede registrar animales.</strong>
                 <div className="text-xs mt-2">Conéctate con la cuenta que desplegó el contrato para acceder a esta función.</div>
             </div>
         );
+        */
+       return (
+        <></>
+       )
     }
 
     if (isOwner === null) {

@@ -34,12 +34,12 @@ export default function DonateToAnimal({ animalId }: { animalId: number }) {
                 placeholder="ETH"
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
-                className="border px-2 py-1 rounded mr-2"
+                className="border px-2 py-1 rounded mr-2 text-black"
             />
             <button
                 onClick={donate}
                 disabled={loading}
-                className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 mt-2"
             >
                 {loading ? "Donando..." : "Donar"}
             </button>
