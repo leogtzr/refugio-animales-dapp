@@ -92,11 +92,11 @@ export default function AnimalList() {
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-gray-500">
-                                    <div className="text-center">
-                                        <div className="text-4xl mb-2">🐾</div>
-                                        <div className="text-sm">Sin imagen</div>
-                                    </div>
-                                </div>
+-                                    <div className="text-center">
+-                                        <div className="text-4xl mb-2">🐾</div>
+-                                        <div className="text-sm">Sin imagen</div>
+-                                    </div>
+-                                </div>
                             )}
                         </div>
 

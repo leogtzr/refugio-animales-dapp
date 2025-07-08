@@ -60,3 +60,7 @@ out/
 
 lib/forge-std
 lib/openzeppelin-contracts
+
+.env
+.env.local
+.env.*.local
