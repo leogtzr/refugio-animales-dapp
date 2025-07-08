@@ -49,6 +49,13 @@ export default function AnimalList() {
     const [selectedAnimal, setSelectedAnimal] = useState<{ id: number, name: string } | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Visor de imágenes
+    const [imageModal, setImageModal] = useState<{
+        images: string[];
+        current: number;
+        alt: string;
+    } | null>(null);
+
     useEffect(() => {
         const fetchOwner = async () => {
             if (contract) {
@@ -69,6 +76,43 @@ export default function AnimalList() {
         setSelectedAnimal(null);
     };
 
+    // Abrir visor de imágenes
+    const openImageModal = (images: string[], idx: number, alt: string) => {
+        setImageModal({ images, current: idx, alt });
+    };
+
+    // Navegación en el visor
+    const nextImage = () => {
+        if (!imageModal) return;
+        setImageModal({
+            ...imageModal,
+            current: (imageModal.current + 1) % imageModal.images.length,
+        });
+    };
+    const prevImage = () => {
+        if (!imageModal) return;
+        setImageModal({
+            ...imageModal,
+            current:
+                (imageModal.current - 1 + imageModal.images.length) %
+                imageModal.images.length,
+        });
+    };
+    const closeImageModal = () => setImageModal(null);
+
+    // Navegación con teclado
+    useEffect(() => {
+        if (!imageModal) return;
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === "ArrowRight") nextImage();
+            if (e.key === "ArrowLeft") prevImage();
+            if (e.key === "Escape") closeImageModal();
+        };
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+        // eslint-disable-next-line
+    }, [imageModal]);
+
     if (isLoading) return <div>Cargando animales...</div>;
     if (isError) return <div>Error al cargar animales</div>;
     if (!animals || animals.length === 0) return <div>No hay animales registrados.</div>;
@@ -76,84 +120,103 @@ export default function AnimalList() {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {animals.map((animal: any) => (
-                    <div key={animal.id} className="border rounded-lg shadow-lg bg-white overflow-hidden hover:shadow-xl transition-shadow">
-                        {/* Imagen del animal */}
-                        <div className="h-48 bg-gray-200 overflow-hidden">
-                            {animal.ipfsHashes && animal.ipfsHashes.length > 0 ? (
-                                <img
-                                    src={`https://gateway.pinata.cloud/ipfs/${animal.ipfsHashes[0]}`}
-                                    alt={animal.name}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                        // Fallback si la imagen no carga
-                                        e.currentTarget.src = "https://placehold.co/400x300/e5e7eb/6b7280?text=Sin+Imagen";
-                                    }}
-                                />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-500">
--                                    <div className="text-center">
--                                        <div className="text-4xl mb-2">🐾</div>
--                                        <div className="text-sm">Sin imagen</div>
--                                    </div>
--                                </div>
-                            )}
-                        </div>
-
-                        {/* Información del animal */}
-                        <div className="p-4">
-                            <div className="mb-3">
-                                <h2 className="font-bold text-xl mb-2 text-gray-900">{animal.name}</h2>
-                                <div className="mb-2">{getStatusBadge(Number(animal.status))}</div>
-                            </div>
-
-                            <div className="space-y-1 text-sm text-gray-600 mb-4">
-                                <p><span className="font-medium">Especie:</span> {animal.species}</p>
-                                <p><span className="font-medium">Edad:</span> {animal.age} meses</p>
-                                <p><span className="font-medium">Raza:</span> {animal.breed}</p>
-                                <p><span className="font-medium">Descripción:</span> {animal.description}</p>
-                            </div>
-
-                            {/* Botones de acción */}
-                            {owner && address && owner !== address.toLowerCase() && Number(animal.status) === 0 && (
-                                <div className="space-y-2 mt-4">
-                                    <DonateToAnimal animalId={Number(animal.id)} />
-                                    <button
-                                        onClick={() => handleAdoptionClick(Number(animal.id), animal.name)}
-                                        className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium"
-                                    >
-                                        Solicitar Adopción
-                                    </button>
-                                </div>
-                            )}
-
-                            {/* Mostrar más imágenes si las hay */}
-                            {animal.ipfsHashes && animal.ipfsHashes.length > 1 && (
-                                <div className="mt-3 pt-3 border-t">
-                                    <div className="text-xs text-gray-500 mb-2">Más imágenes:</div>
-                                    <div className="flex gap-2 overflow-x-auto">
-                                        {animal.ipfsHashes.slice(1, 4).map((hash: string, index: number) => (
+                {animals.map((animal: any) => {
+                    const images = (animal.ipfsHashes || []).map(
+                        (hash: string) => `https://gateway.pinata.cloud/ipfs/${hash}`
+                    );
+                    return (
+                        <div
+                            key={animal.id}
+                            className="border rounded-lg shadow-lg bg-white overflow-hidden hover:shadow-xl transition-shadow"
+                        >
+                            {/* Galería de imágenes */}
+                            <div className="relative h-56 bg-gray-200 flex items-center justify-center overflow-hidden">
+                                {images.length > 0 ? (
+                                    <img
+                                        src={images[0]}
+                                        alt={animal.name}
+                                        className="w-full h-full object-cover cursor-pointer transition-transform duration-200 hover:scale-105"
+                                        onClick={() => openImageModal(images, 0, animal.name)}
+                                        onError={(e) => {
+                                            e.currentTarget.src =
+                                                "https://placehold.co/400x300/e5e7eb/6b7280?text=Sin+Imagen";
+                                        }}
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-500">
+                                        <div className="text-center">
+                                            <div className="text-4xl mb-2">🐾</div>
+                                            <div className="text-sm">Sin imagen</div>
+                                        </div>
+                                    </div>
+                                )}
+                                {/* Miniaturas si hay más imágenes */}
+                                {images.length > 1 && (
+                                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 bg-white/70 px-2 py-1 rounded shadow">
+                                        {images.map((src: string, idx: number) => (
                                             <img
-                                                key={index}
-                                                src={`https://gateway.pinata.cloud/ipfs/${hash}`}
-                                                alt={`${animal.name} ${index + 2}`}
-                                                className="w-12 h-12 object-cover rounded border flex-shrink-0"
+                                                key={idx}
+                                                src={src}
+                                                alt={`${animal.name} ${idx + 1}`}
+                                                className={`w-10 h-10 object-cover rounded border cursor-pointer hover:ring-2 hover:ring-green-500 transition ${idx === 0 ? "ring-2 ring-green-600" : ""
+                                                    }`}
+                                                onClick={() => openImageModal(images, idx, `${animal.name} ${idx + 1}`)}
                                                 onError={(e) => {
-                                                    e.currentTarget.style.display = 'none';
+                                                    e.currentTarget.style.display = "none";
                                                 }}
                                             />
                                         ))}
-                                        {animal.ipfsHashes.length > 4 && (
-                                            <div className="w-12 h-12 bg-gray-100 rounded border flex items-center justify-center text-xs text-gray-500 flex-shrink-0">
-                                                +{animal.ipfsHashes.length - 4}
-                                            </div>
-                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Información del animal */}
+                            <div className="p-4">
+                                <div className="mb-3">
+                                    <h2 className="font-bold text-xl mb-2 text-gray-900">
+                                        {animal.name}
+                                    </h2>
+                                    <div className="mb-2">
+                                        {getStatusBadge(Number(animal.status))}
                                     </div>
                                 </div>
-                            )}
+
+                                <div className="space-y-1 text-sm text-gray-600 mb-4">
+                                    <p>
+                                        <span className="font-medium">Especie:</span> {animal.species}
+                                    </p>
+                                    <p>
+                                        <span className="font-medium">Edad:</span> {animal.age} meses
+                                    </p>
+                                    <p>
+                                        <span className="font-medium">Raza:</span> {animal.breed}
+                                    </p>
+                                    <p>
+                                        <span className="font-medium">Descripción:</span> {animal.description}
+                                    </p>
+                                </div>
+
+                                {/* Botones de acción */}
+                                {owner &&
+                                    address &&
+                                    owner !== address.toLowerCase() &&
+                                    Number(animal.status) === 0 && (
+                                        <div className="space-y-2 mt-4">
+                                            <DonateToAnimal animalId={Number(animal.id)} />
+                                            <button
+                                                onClick={() =>
+                                                    handleAdoptionClick(Number(animal.id), animal.name)
+                                                }
+                                                className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                                            >
+                                                Solicitar Adopción
+                                            </button>
+                                        </div>
+                                    )}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             {/* Modal de adopción */}
@@ -164,6 +227,57 @@ export default function AnimalList() {
                     animalId={selectedAnimal.id}
                     animalName={selectedAnimal.name}
                 />
+            )}
+
+            {/* Modal visor de imagen con flechas */}
+            {imageModal && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+                    onClick={closeImageModal}
+                >
+                    <div
+                        className="relative bg-white rounded-lg shadow-lg p-2 max-w-3xl w-full flex flex-col items-center"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <button
+                            className="absolute top-2 right-2 text-gray-700 hover:text-red-500 text-2xl font-bold"
+                            onClick={closeImageModal}
+                            aria-label="Cerrar"
+                        >
+                            ×
+                        </button>
+                        {/* Flecha izquierda */}
+                        {imageModal.images.length > 1 && (
+                            <button
+                                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 text-2xl text-gray-700 hover:bg-green-100 hover:text-green-700 transition"
+                                onClick={prevImage}
+                                aria-label="Anterior"
+                                style={{ zIndex: 10 }}
+                            >
+                                &#8592;
+                            </button>
+                        )}
+                        <img
+                            src={imageModal.images[imageModal.current]}
+                            alt={imageModal.alt}
+                            className="max-h-[70vh] w-auto rounded"
+                        />
+                        {/* Flecha derecha */}
+                        {imageModal.images.length > 1 && (
+                            <button
+                                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 text-2xl text-gray-700 hover:bg-green-100 hover:text-green-700 transition"
+                                onClick={nextImage}
+                                aria-label="Siguiente"
+                                style={{ zIndex: 10 }}
+                            >
+                                &#8594;
+                            </button>
+                        )}
+                        <div className="mt-2 text-gray-700 text-sm">
+                            {imageModal.alt} ({imageModal.current + 1} / {imageModal.images.length})
+                        </div>
+                    </div>
+                </div>
             )}
         </>
     );
