@@ -183,16 +183,16 @@ export default function AnimalList() {
 
                                 <div className="space-y-1 text-sm text-gray-600 mb-4">
                                     <p>
-                                        <span className="font-medium">Especie:</span> {animal.species}
+                                        <span className="font-medium">Especie:</span> <span className="font-semibold">{animal.species}</span>
                                     </p>
                                     <p>
-                                        <span className="font-medium">Edad:</span> {animal.age} meses
+                                        <span className="font-medium">Edad:</span> <span className="font-semibold">{animal.age} meses</span>
                                     </p>
                                     <p>
-                                        <span className="font-medium">Raza:</span> {animal.breed}
+                                        <span className="font-medium">Raza:</span> <span className="font-semibold">{animal.breed}</span>
                                     </p>
                                     <p>
-                                        <span className="font-medium">Descripción:</span> {animal.description}
+                                        <span className="font-medium">Descripción:</span> <span className="font-semibold">{animal.description}</span>
                                     </p>
                                 </div>
 

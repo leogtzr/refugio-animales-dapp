@@ -74,7 +74,7 @@ export default function AdminConsole() {
                     try {
                         const animal = await contract.getAnimal(i);
                         console.log(animal);
-                        console.log('Got: ', animal[1]);
+                        // console.log('Got: ', animal[1]);
                         if (animal.exists) {
                             animalsArr.push({ 
                                 ...animal, 

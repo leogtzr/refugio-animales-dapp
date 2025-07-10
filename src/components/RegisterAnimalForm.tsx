@@ -176,7 +176,7 @@ export default function RegisterAnimalForm() {
                     <label className="block text-sm font-medium mb-1 text-black">Nombre</label>
                     <input 
                         name="name" 
-                        placeholder="Nombre del animal" 
+                        placeholder="Nombre del animalito" 
                         value={form.name} 
                         onChange={handleChange} 
                         className="border px-3 py-2 rounded w-full text-black focus:outline-none focus:ring-2 focus:ring-green-500" 
