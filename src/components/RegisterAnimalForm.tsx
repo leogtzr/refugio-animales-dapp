@@ -234,6 +234,7 @@ export default function RegisterAnimalForm() {
                     <label className="block text-sm font-medium mb-1 text-black">Imágenes del animal</label>
                     <input
                         type="file"
+                        name="file"
                         accept="image/*"
                         multiple
                         onChange={handleImageChange}
