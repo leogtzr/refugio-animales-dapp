@@ -12,4 +12,8 @@ You will get something like this, then click on "+ Add a custom network"
 Add a Network name and then click on "Add a URL"/"Add RPC URL"
 ![Add the Network name](./images/MetaMask-add-Anvil-network-2.png)
 
+Add the RPC URL (you can get the RPC URL in the `anvil`'s command output')
 ![Add the Network name](./images/MetaMask-add-Anvil-network-3.png)
+
+### 4. Fill the Anvil network details
+![Add Anvil network details](./images/MetaMask-add-Anvil-network-4.png)
