@@ -5,6 +5,7 @@ import { useContract } from "../hooks/useContract";
 import { useEffect, useState } from "react";
 import DonateToAnimal from "./DonateToAnimal";
 import AdoptionModal from "./AdoptionModal";
+import Link from "next/link";
 
 function getStatusBadge(status: number) {
     switch (status) {
@@ -174,7 +175,7 @@ export default function AnimalList() {
                             <div className="p-4">
                                 <div className="mb-3">
                                     <h2 className="font-bold text-xl mb-2 text-gray-900">
-                                        {animal.name}
+                                        <Link href={`/animal?id=${animal.id}`}>{animal.name}</Link>
                                     </h2>
                                     <div className="mb-2">
                                         {getStatusBadge(Number(animal.status))}

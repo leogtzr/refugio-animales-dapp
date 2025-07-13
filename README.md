@@ -1,105 +1,67 @@
-# refugio-animales-dapp
-Animal Shelter DApp
-=======
-## Foundry
+# Refugio Animal DApp
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+[🇪🇸 Read this in Spanish](./README.es.md)
 
-Foundry consists of:
+A decentralized application (DApp) for animal shelters, built with **Solidity** (Smart Contract) and **Next.js** (Frontend). This project allows animal shelters to register rescued animals, receive donations, and manage adoption requests transparently on the blockchain.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+---
 
-## Documentation
+## Features
 
-https://book.getfoundry.sh/
+- **Register rescued animals** with images (stored on IPFS).
+- **Donate** to the shelter or to specific animals (ETH).
+- **Request adoption** for available animals.
+- **Admin panel** for managing adoption requests and animal status.
+- **User dashboard** to view your donations.
+- **All data and actions are stored on-chain** for transparency.
 
-## Usage
+---
 
-### Build
+## Tech Stack
 
-```shell
-$ forge build
-```
+- **Smart Contract:** Solidity (Foundry, OpenZeppelin)
+- **Frontend:** Next.js, React, TailwindCSS
+- **Blockchain:** Local Anvil node (or Sepolia testnet)
+- **IPFS:** Pinata (via API) for animal images
 
-### Test
+---
 
-```shell
-$ forge test
-```
+## Quick Start
 
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/youruser/refugio-animal.git
+cd refugio-animal
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Deploy the Smart Contract (Local)
+Start a local Anvil node:
+```bash
+anvil
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deploy the contract using _Foundry_:
+```bash
+forge script script/Deploy.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --private-key <YOUR_PRIVATE_KEY>
+```
+The default contract address is set in src/utils/constants.ts as CONTRACT_ADDRESS. Update it if needed.
 
-## Learn More
+### 4. Configure Environment Variables
+Create a .env.local file in the root with your Pinata and Web3.Storage credentials:
+```bash
+PINATA_API_KEY=your_pinata_api_key
+PINATA_API_SECRET=your_pinata_api_secret
+NEXT_PUBLIC_WEB3STORAGE_TOKEN=your_web3storage_token
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. Run the DApp
+```bash
+npm run dev
+```
+Open http://localhost:3000 in your browser.

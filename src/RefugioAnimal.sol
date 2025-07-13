@@ -91,11 +91,11 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
         totalAnimalsRescued = 0;
         totalDonations = 0;
       
-        // Información inicial del refugio
+        // Can be changed later with ref:updateShelterInfo()
         shelterInfo = ShelterInfo({
-            name: "Refugio Animal Blockchain",
+            name: "Refugio Animal Patitas ",
             physicalAddress: "",
-            email: "",
+            email: "leogutierrezramirez@gmail.com",
             phone: "",
             website: "",
             socialMedia: "",

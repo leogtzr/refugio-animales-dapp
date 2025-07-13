@@ -1,7 +1,10 @@
 "use client";
 import ConnectWallet from "../components/ConnectWallet";
 import AnimalList from "../components/AnimalList";
+import DonateToShelter from "../components/DonateToShelter";
 import RegisterAnimalForm from "../components/RegisterAnimalForm";
+import ShelterInfo from "../components/ShelterInfo";
+import UserDonations from "../components/UserDonations";
 import { useWallet } from "../hooks/useWallet";
 import { useContract } from "../hooks/useContract";
 import { useEffect, useState } from "react";
@@ -27,6 +30,7 @@ export default function Home() {
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold">Refugio Animal en la Blockchain</h1>
                 <ConnectWallet />
+                <UserDonations />
             </div>
             {isOwner && (
                 <div className="mb-6">
@@ -38,7 +42,9 @@ export default function Home() {
                     </Link>
                 </div>
             )}
+            <DonateToShelter />
             <RegisterAnimalForm />
+            <ShelterInfo />
             <AnimalList />
         </main>
     );
