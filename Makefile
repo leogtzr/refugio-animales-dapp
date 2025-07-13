@@ -1,6 +1,5 @@
 .DEFAULT_GOAL := build
 
-BIN_FILE=vecin
 SMART_CONTRACT_PATH=src/RefugioAnimal.sol
 
 build:
