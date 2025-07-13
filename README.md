@@ -119,6 +119,9 @@ See `src/RefugioAnimal.sol` for full contract details.
 - Testnet: Update `CONTRACT_ADDRESS` and deploy to Sepolia or another testnet.
 - Production: Deploy the frontend to Vercel, Netlify, or your preferred host.
 
+## How to build the Smart Contract / MetaMask / Anvil
+[How to](./docs/HOWTODEPLOY.md)
+
 ## Requirement
 - Node.js >= 18
 - Foundry (for Solidity development)
