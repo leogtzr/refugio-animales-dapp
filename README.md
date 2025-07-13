@@ -50,7 +50,7 @@ Deploy the contract using _Foundry_:
 ```bash
 forge script script/Deploy.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --private-key <YOUR_PRIVATE_KEY>
 ```
-The default contract address is set in src/utils/constants.ts as CONTRACT_ADDRESS. Update it if needed.
+The default contract address is set in `src/utils/constants.ts` as `CONTRACT_ADDRESS`. Update it if needed.
 
 ### 4. Configure Environment Variables
 Create a .env.local file in the root with your Pinata and Web3.Storage credentials:
@@ -90,7 +90,7 @@ Open http://localhost:3000 in your browser.
 - **Shelter Info**: Store and update shelter contact and admin info.
 - **Admin System**: Owner can add/remove admins.
 
-See src/RefugioAnimal.sol for full contract details.
+See `src/RefugioAnimal.sol` for full contract details.
 
 ## Project Structure
 ```
