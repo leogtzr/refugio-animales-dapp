@@ -31,7 +31,10 @@ A decentralized application (DApp) for animal shelters, built with **Solidity** 
 It will probably change in the near future.
 
 ![Owner registering an animal](./pics-refugio-animal/refugio-animal-registering-animal.png)
+
 ![Refugio Animal Gallery](./pics-refugio-animal/refugio-animal-gallery-1.png)
+
+![Refugio Animal Gallery 2](./pics-refugio-animal/refugio-animal-gallery-2.png)
 
 ---
 
