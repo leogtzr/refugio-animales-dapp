@@ -29,6 +29,10 @@ jobs:
           forge fmt --check
         id: fmt
 
+      - name: Install Foundry dependencies
+        run: |
+          forge install
+
       - name: Run Forge build
         run: |
           forge build --sizes
