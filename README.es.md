@@ -115,7 +115,7 @@ Ver `src/RefugioAnimal.sol` para detalles completos.
 ## Despliegue
 
 - **Local**: Usa Anvil y Foundry como se describe arriba.
-- **Testnet**: Actualiza CONTRACT_ADDRESS y despliega en Sepolia u otra testnet.
+- **Testnet**: Actualiza `CONTRACT_ADDRESS` y despliega en Sepolia u otra testnet.
 - **Producción**: Despliega el frontend en Vercel, Netlify o tu hosting favorito.
 
 ## Requisitos
@@ -128,3 +128,6 @@ Ver `src/RefugioAnimal.sol` para detalles completos.
 
 ## Licencia
 MIT
+
+## Contacto
+Para dudas o contribuciones, abre un issue o contacta a [Leonardo Gutiérrez R.](mailto:leogutierrezramirez@gmail.com).
