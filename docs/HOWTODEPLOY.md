@@ -2,5 +2,5 @@
 
 ## Add the Anvil Network to MetaMask
 ### 1. Open the MetaMask extension
-![Open the MetaMask extension](./docs/MetaMask-open-extension.png)
+![Open the MetaMask extension](./docs/images/MetaMask-open-extension.png)
 
