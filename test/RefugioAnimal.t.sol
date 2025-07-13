@@ -75,14 +75,7 @@ contract RefugioAnimalTest is Test {
         vm.expectEmit(true, false, false, true);
         emit AnimalRegistered(1, "Firulais", "Perro");
 
-        shelter.registerAnimal(
-            "Firulais",
-            24,
-            "Perro",
-            "Mestizo",
-            "Perro rescatado de la calle",
-            ipfsHashes
-        );
+        shelter.registerAnimal("Firulais", 24, "Perro", "Mestizo", "Perro rescatado de la calle", ipfsHashes);
 
         RefugioAnimal.Animal memory animal = shelter.getAnimal(1);
         assertEq(animal.id, 1);
@@ -91,7 +84,7 @@ contract RefugioAnimalTest is Test {
         assertEq(animal.species, "Perro");
         assertEq(animal.breed, "Mestizo");
         assertEq(animal.description, "Perro rescatado de la calle");
-        assertEq(uint(animal.status), uint(RefugioAnimal.AnimalStatus.Available));
+        assertEq(uint256(animal.status), uint256(RefugioAnimal.AnimalStatus.Available));
         assertTrue(animal.exists);
         assertEq(shelter.totalAnimalsRescued(), 1);
     }
@@ -166,16 +159,11 @@ contract RefugioAnimalTest is Test {
         emit AdoptionRequested(1, user1);
 
         shelter.requestAdoption(
-            1,
-            "Juan Perez",
-            "juan@email.com",
-            "555-1234",
-            "Calle 123",
-            "Tengo experiencia con perros"
+            1, "Juan Perez", "juan@email.com", "555-1234", "Calle 123", "Tengo experiencia con perros"
         );
 
         RefugioAnimal.Animal memory animal = shelter.getAnimal(1);
-        assertEq(uint(animal.status), uint(RefugioAnimal.AnimalStatus.InAdoptionProcess));
+        assertEq(uint256(animal.status), uint256(RefugioAnimal.AnimalStatus.InAdoptionProcess));
     }
 
     function testApproveAdoption() public {
@@ -194,7 +182,7 @@ contract RefugioAnimalTest is Test {
         shelter.approveAdoption(1, 0);
 
         RefugioAnimal.Animal memory animal = shelter.getAnimal(1);
-        assertEq(uint(animal.status), uint(RefugioAnimal.AnimalStatus.Adopted));
+        assertEq(uint256(animal.status), uint256(RefugioAnimal.AnimalStatus.Adopted));
         assertEq(animal.adoptedBy, user1);
         assertTrue(animal.adoptionDate > 0);
     }
@@ -209,7 +197,7 @@ contract RefugioAnimalTest is Test {
         shelter.updateAnimalStatus(1, RefugioAnimal.AnimalStatus.Adopted);
 
         RefugioAnimal.Animal memory animal = shelter.getAnimal(1);
-        assertEq(uint(animal.status), uint(RefugioAnimal.AnimalStatus.Adopted));
+        assertEq(uint256(animal.status), uint256(RefugioAnimal.AnimalStatus.Adopted));
     }
 
     function testUpdateShelterInfo() public {
