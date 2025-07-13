@@ -26,6 +26,20 @@ Una aplicación descentralizada (DApp) para refugios de animales, construida con
 
 ---
 
+## UI
+
+Probablemente va a cambiar un poco:
+
+![Owner registering an animal](./pics-refugio-animal/refugio-animal-registering-animal.png)
+
+![Refugio Animal Gallery](./pics-refugio-animal/refugio-animal-gallery-1.png)
+
+![Refugio Animal Gallery 2](./pics-refugio-animal/refugio-animal-gallery-2.png)
+
+![Refugio Animal Admin Console](./pics-refugio-animal/refugio-animal-adminConsole.png)
+
+---
+
 ## Inicio Rápido
 
 ### 1. Clona el repositorio
