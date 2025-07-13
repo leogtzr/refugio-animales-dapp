@@ -129,5 +129,11 @@ Ver `src/RefugioAnimal.sol` para detalles completos.
 ## Licencia
 MIT
 
+## Créditos
+- [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
+- [Foundry](https://github.com/foundry-rs/foundry)
+- [Pinata](https://www.pinata.cloud/)
+- [Web3.Storage](https://web3.storage/)
+
 ## Contacto
 Para dudas o contribuciones, abre un issue o contacta a [Leonardo Gutiérrez R.](mailto:leogutierrezramirez@gmail.com).
