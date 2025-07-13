@@ -65,3 +65,61 @@ NEXT_PUBLIC_WEB3STORAGE_TOKEN=your_web3storage_token
 npm run dev
 ```
 Open http://localhost:3000 in your browser.
+
+## Usage
+### Registering Animals (Admin)
+- Only the contract owner or admins can register new animals.
+- Fill out the registration form, upload up to 3 images (stored on IPFS), and submit.
+
+### Donating
+- Anyone can donate ETH to the shelter or to a specific animal.
+- Donations are tracked on-chain and visible in the UI.
+
+### Adoption Requests
+- Users can request to adopt available animals by filling out a form.
+- Admins review and approve/reject requests in the admin panel.
+
+### Admin Panel
+- Accessible to contract owner/admins.
+- Manage adoption requests, approve adoptions, update animal status/info, and update shelter info.
+
+## Smart Contract Overview
+- **Animal Management**: Register, update, and track animals and their status.
+- **Donations**: Accept and track donations per animal and for the shelter.
+- **Adoptions**: Handle adoption requests, approvals, and status changes.
+- **Shelter Info**: Store and update shelter contact and admin info.
+- **Admin System**: Owner can add/remove admins.
+
+See src/RefugioAnimal.sol for full contract details.
+
+## Project Structure
+```
+.
+├── src/
+│   ├── app/                # Next.js app directory
+│   ├── components/         # React components (AnimalList, AdoptionModal, etc.)
+│   ├── hooks/              # Custom React hooks (useWallet, useContract, useAnimals)
+│   ├── pages/api/          # API routes (upload to Pinata)
+│   ├── utils/              # Contract and IPFS utilities
+│   └── RefugioAnimal.sol   # Solidity smart contract
+├── script/                 # Foundry deployment scripts
+├── test/                   # Smart contract tests
+├── public/                 # Static assets
+├── package.json
+├── foundry.toml
+└── ...
+```
+
+## Deployment
+- Local: Use Anvil and Foundry as described above.
+- Testnet: Update CONTRACT_ADDRESS and deploy to Sepolia or another testnet.
+- Production: Deploy the frontend to Vercel, Netlify, or your preferred host.
+
+## Requirement
+- Node.js >= 18
+- Foundry (for Solidity development)
+- Anvil (for local blockchain)
+- Metamask (for wallet connection)
+
+## License
+MIT
