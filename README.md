@@ -45,6 +45,10 @@ Start a local Anvil node:
 ```bash
 anvil
 ```
+If you get errors due to the size of the Smart Contract, use the following parameters instead:
+```bash
+anvil --code-size-limit 999999
+```
 
 Deploy the contract using _Foundry_:
 ```bash

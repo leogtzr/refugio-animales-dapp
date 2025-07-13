@@ -45,6 +45,11 @@ Inicia un nodo local con Anvil:
 ```bash
 anvil
 ```
+Si obtienes errores relacionado con el tamaño del Smart Contract, utiliza los siguientes parámetros:
+```bash
+anvil --code-size-limit 999999
+```
+
 Despliega el contrato usando Foundry:
 ```bash
 forge script script/Deploy.s.sol --rpc-url http://127.0.0.1:8545 --broadcast --private-key <TU_PRIVATE_KEY>
