@@ -17,3 +17,7 @@ Add the RPC URL (you can get the RPC URL in the `anvil`'s command output')
 
 ### 4. Fill the Anvil network details
 ![Add Anvil network details](./images/MetaMask-add-Anvil-network-4.png)
+
+### 5. Anvil command output
+![Add Anvil network details](./images/MetaMask-add-Anvil-network-5.png)
+![Add Anvil network details](./images/MetaMask-add-Anvil-network-6.png)
