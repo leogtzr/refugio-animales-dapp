@@ -123,3 +123,6 @@ See src/RefugioAnimal.sol for full contract details.
 
 ## License
 MIT
+
+## Contact
+For questions or contributions, open an issue or contact [Leonardo Gutiérrez R.](mailto:leogutierrezramirez@gmail.com).
