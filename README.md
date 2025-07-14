@@ -1,6 +1,6 @@
 # Refugio Animal DApp
 
-[![CI](https://github.com/leogtzr/refugio-animal/actions/workflows/test.yml/badge.svg)](https://github.com/leogtzr/refugio-animal/actions/workflows/test.yml)
+[![CI](https://github.com/leogtzr/refugio-animales-dapp/actions/workflows/test.yml/badge.svg)](https://github.com/leogtzr/refugio-animales-dapp/actions/workflows/test.yml)
 
 [🇪🇸 Read this in Spanish](./README.es.md)
 
