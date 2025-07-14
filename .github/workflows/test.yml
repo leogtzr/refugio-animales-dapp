@@ -33,30 +33,14 @@ jobs:
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
 
-      - name: Install OpenZeppelin
-        run: forge install OpenZeppelin/openzeppelin-contracts
+      - name: Install OpenZeppelin (v4.9.5)
+        run: forge install OpenZeppelin/openzeppelin-contracts@v4.9.5
 
-      - name: Remove OpenZeppelin remappings.txt
-        run: rm -f lib/openzeppelin-contracts/remappings.txt
-        
-      - name: List lib directory
-        run: ls -lR lib
+      - name: Remove all remappings.txt
+        run: find lib -name "remappings.txt" -delete
 
-      - name: Debug - Check if files exist
-        run: |
-          echo "=== Checking if ReentrancyGuard.sol exists ==="
-          ls -la lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol || echo "NOT FOUND"
-          
-          echo "=== Checking remappings files ==="
-          find . -name "remappings.txt" -exec echo "Found: {}" \; -exec cat {} \;
-          
-          echo "=== Foundry config ==="
-          forge config --json | jq '.remappings'
-
-      - name: Debug - Test remapping manually
-        run: |
-          echo "=== Testing remapping resolution ==="
-          forge build --dry-run --remappings "@openzeppelin/=lib/openzeppelin-contracts/" || echo "DRY RUN FAILED"
+      - name: List OpenZeppelin contracts
+        run: ls -lR lib/openzeppelin-contracts/contracts
 
       - name: Run Forge build
         run: forge build --sizes --remappings "@openzeppelin/=lib/openzeppelin-contracts/"
