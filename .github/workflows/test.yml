@@ -30,8 +30,8 @@ jobs:
         id: fmt
 
       - name: Clean build and lib
-      run: |
-        rm -rf out cache lib
+        run: |
+          rm -rf out cache lib
 
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
