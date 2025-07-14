@@ -38,7 +38,7 @@ jobs:
 
       - name: Remove OpenZeppelin remappings.txt
         run: rm -f lib/openzeppelin-contracts/remappings.txt
-
+        
       - name: List lib directory
         run: ls -lR lib
 
