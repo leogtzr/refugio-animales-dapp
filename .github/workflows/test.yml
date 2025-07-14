@@ -33,6 +33,9 @@ jobs:
         run: |
           forge install
 
+      - name: Install forge-std
+        run: forge install foundry-rs/forge-std
+
       - name: Run Forge build
         run: |
           forge build --sizes
