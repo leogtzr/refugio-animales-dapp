@@ -29,10 +29,6 @@ jobs:
           forge fmt --check
         id: fmt
 
-      - name: Install Foundry dependencies
-        run: |
-          forge install
-
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
 
