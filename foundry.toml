@@ -6,5 +6,10 @@ remappings = [
     "@openzeppelin/=lib/openzeppelin-contracts/"
 ]
 
+[profile.ci]
+bytecode_hash = "none"
+optimizer = true
+optimizer_runs = 200
+
 [rpc_endpoints]
 localhost = "http://127.0.0.1:8545"
