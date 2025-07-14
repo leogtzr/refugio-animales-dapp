@@ -36,6 +36,9 @@ jobs:
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
 
+      - name: Install OpenZeppelin
+        run: forge install OpenZeppelin/openzeppelin-contracts
+
       - name: Run Forge build
         run: |
           forge build --sizes
