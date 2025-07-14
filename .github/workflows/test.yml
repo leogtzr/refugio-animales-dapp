@@ -35,6 +35,9 @@ jobs:
       - name: Install OpenZeppelin
         run: forge install OpenZeppelin/openzeppelin-contracts
 
+      - name: List lib directory
+        run: ls -lR lib
+
       - name: Run Forge build
         run: |
           forge build --sizes
