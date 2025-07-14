@@ -1,5 +1,7 @@
 # Refugio Animal DApp
 
+[![CI](https://github.com/leogtzr/refugio-animal/actions/workflows/test.yml/badge.svg)](https://github.com/leogtzr/refugio-animal/actions/workflows/test.yml)
+
 [🇪🇸 Read this in Spanish](./README.es.md)
 
 A decentralized application (DApp) for animal shelters, built with **Solidity** (Smart Contract) and **Next.js** (Frontend). This project allows animal shelters to register rescued animals, receive donations, and manage adoption requests transparently on the blockchain.
