@@ -38,6 +38,9 @@ jobs:
       - name: List lib directory
         run: ls -lR lib
 
+      - name: Check ReentrancyGuard.sol exists
+        run: test -f lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol && echo "OK" || (echo "NOT FOUND" && exit 1)
+
       - name: Run Forge build
         run: |
           forge build --sizes
