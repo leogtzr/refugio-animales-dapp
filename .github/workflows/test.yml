@@ -21,17 +21,14 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
 
       - name: Show Forge version
-        run: |
-          forge --version
+        run: forge --version
 
       - name: Run Forge fmt
-        run: |
-          forge fmt --check
+        run: forge fmt --check
         id: fmt
 
       - name: Clean build and lib
-        run: |
-          rm -rf out cache lib
+        run: rm -rf out cache lib
 
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
@@ -42,15 +39,13 @@ jobs:
       - name: Remove OpenZeppelin remappings.txt
         run: rm -f lib/openzeppelin-contracts/remappings.txt
 
+      # (Opcional) Debug
       - name: List lib directory
         run: ls -lR lib
 
       - name: Run Forge build
-        run: |
-          forge build --sizes
-        id: build
+        run: forge build --sizes --remappings "@openzeppelin/=lib/openzeppelin-contracts/"
 
       - name: Run Forge tests
-        run: |
-          forge test -vvv
+        run: forge test -vvv
         id: test
