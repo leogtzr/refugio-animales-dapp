@@ -42,21 +42,21 @@ jobs:
       - name: List lib directory
         run: ls -lR lib
 
-        - name: Debug - Check if files exist
-          run: |
-            echo "=== Checking if ReentrancyGuard.sol exists ==="
-            ls -la lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol || echo "NOT FOUND"
-            
-            echo "=== Checking remappings files ==="
-            find . -name "remappings.txt" -exec echo "Found: {}" \; -exec cat {} \;
-            
-            echo "=== Foundry config ==="
-            forge config --json | jq '.remappings'
+      - name: Debug - Check if files exist
+        run: |
+          echo "=== Checking if ReentrancyGuard.sol exists ==="
+          ls -la lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol || echo "NOT FOUND"
+          
+          echo "=== Checking remappings files ==="
+          find . -name "remappings.txt" -exec echo "Found: {}" \; -exec cat {} \;
+          
+          echo "=== Foundry config ==="
+          forge config --json | jq '.remappings'
 
-        - name: Debug - Test remapping manually
-          run: |
-            echo "=== Testing remapping resolution ==="
-            forge build --dry-run --remappings "@openzeppelin/=lib/openzeppelin-contracts/" || echo "DRY RUN FAILED"
+      - name: Debug - Test remapping manually
+        run: |
+          echo "=== Testing remapping resolution ==="
+          forge build --dry-run --remappings "@openzeppelin/=lib/openzeppelin-contracts/" || echo "DRY RUN FAILED"
 
       - name: Run Forge build
         run: forge build --sizes --remappings "@openzeppelin/=lib/openzeppelin-contracts/"
