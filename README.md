@@ -38,6 +38,8 @@ It will probably change in the near future.
 
 ![Refugio Animal Gallery 2](./pics-refugio-animal/refugio-animal-gallery-2.png)
 
+![Animal Detail](./pics-refugio-animal/animal-detail.png)
+
 ![Refugio Animal Admin Console](./pics-refugio-animal/refugio-animal-adminConsole.png)
 
 ---
