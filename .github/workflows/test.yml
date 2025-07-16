@@ -33,8 +33,8 @@ jobs:
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
 
-      - name: Install OpenZeppelin (v4.9.5)
-        run: forge install OpenZeppelin/openzeppelin-contracts@v4.9.5
+      - name: Install OpenZeppelin (v4.9.7)
+        run: forge install OpenZeppelin/openzeppelin-contracts@v4.9.7
 
       - name: Remove all remappings.txt
         run: find lib -name "remappings.txt" -delete
