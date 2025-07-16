@@ -68,7 +68,7 @@ export default function RegisterAnimalForm() {
         let ipfsArr: string[] = [];
         
         try {
-            // Si hay imágenes seleccionadas, subirlas a Pinata
+            // Upload to Pinata
             if (images.length > 0) {
                 setUploading(true);
                 const formData = new FormData();
@@ -91,11 +91,11 @@ export default function RegisterAnimalForm() {
                     throw new Error('No se pudieron obtener los CIDs de las imágenes');
                 }
             } else {
-                // Si no hay imágenes, usar los hashes manuales
+                // If no images, try to use the hashes in the form input
                 ipfsArr = form.ipfsHashes.split(",").map(s => s.trim()).filter(Boolean);
             }
 
-            // Registrar el animal en el contrato
+            // Register the animal in the SC
             const tx = await contract.registerAnimal(
                 form.name,
                 Number(form.age),
@@ -108,7 +108,7 @@ export default function RegisterAnimalForm() {
             setTxHash(tx.hash);
             setSuccessMsg("¡Animal registrado exitosamente!");
             
-            // Limpiar el formulario
+            // Clear the form
             setForm({
                 name: "",
                 age: "",
@@ -119,7 +119,7 @@ export default function RegisterAnimalForm() {
             });
             setImages([]);
             
-            // Limpiar el input de archivos
+            // Clean the files
             const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
             if (fileInput) fileInput.value = '';
             

@@ -19,7 +19,6 @@ export default function ConnectWallet() {
     const connect = async () => {
         if (typeof window !== "undefined" && (window as any).ethereum) {
             await (window as any).ethereum.request({ method: "eth_requestAccounts" });
-            // No recargues la página, el hook actualizará el estado automáticamente
         }
     };
 
