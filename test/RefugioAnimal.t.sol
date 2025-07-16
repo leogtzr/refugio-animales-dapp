@@ -50,9 +50,7 @@ contract RefugioAnimalTest is Test {
         assertTrue(shelter.admins(admin));
 
         vm.prank(admin);
-        vm.expectRevert(
-            abi.encodeWithSelector(OwnableUnauthorizedAccount.selector, admin)
-        );
+        vm.expectRevert(abi.encodeWithSelector(OwnableUnauthorizedAccount.selector, admin));
         shelter.addAdmin(user1);
     }
 
