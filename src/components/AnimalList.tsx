@@ -50,6 +50,11 @@ export default function AnimalList() {
     const [selectedAnimal, setSelectedAnimal] = useState<{ id: number, name: string } | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Estados para filtros y búsqueda
+    const [search, setSearch] = useState("");
+    const [speciesFilter, setSpeciesFilter] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
+
     // Visor de imágenes
     const [imageModal, setImageModal] = useState<{
         images: string[];
@@ -114,17 +119,98 @@ export default function AnimalList() {
         // eslint-disable-next-line
     }, [imageModal]);
 
+    // Filtrar animales
+    const filteredAnimals = animals ? animals.filter((animal: any) => {
+        return (
+            (!search || animal.name.toLowerCase().includes(search.toLowerCase())) &&
+            (!speciesFilter || animal.species.toLowerCase() === speciesFilter.toLowerCase()) &&
+            (!statusFilter || String(animal.status) === statusFilter)
+        );
+    }) : [];
+
+    // Obtener especies únicas para el filtro
+    const uniqueSpecies = animals ? [...new Set(animals.map((animal: any) => animal.species))] : [];
+
     if (isLoading) return <div>Cargando animales...</div>;
     if (isError) return <div>Error al cargar animales</div>;
     if (!animals || animals.length === 0) return <div>No hay animales registrados.</div>;
 
     return (
         <>
+            {/* Filtros y búsqueda */}
+            <div className="mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h3 className="font-bold text-lg mb-3 text-gray-700">Buscar y filtrar animales</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Buscar por nombre
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Nombre del animal..."
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Filtrar por especie
+                        </label>
+                        <select
+                            value={speciesFilter}
+                            onChange={e => setSpeciesFilter(e.target.value)}
+                            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                        >
+                            <option value="">Todas las especies</option>
+                            {uniqueSpecies.map((species: string) => (
+                                <option key={species} value={species}>{species}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Filtrar por estado
+                        </label>
+                        <select
+                            value={statusFilter}
+                            onChange={e => setStatusFilter(e.target.value)}
+                            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                        >
+                            <option value="">Todos los estados</option>
+                            <option value="0">Disponible</option>
+                            <option value="1">En proceso</option>
+                            <option value="2">Adoptado</option>
+                            <option value="3">Fallecido</option>
+                        </select>
+                    </div>
+                </div>
+                {(search || speciesFilter || statusFilter) && (
+                    <div className="mt-3 flex items-center justify-between">
+                        <span className="text-sm text-gray-600">
+                            Mostrando {filteredAnimals.length} de {animals.length} animales
+                        </span>
+                        <button
+                            onClick={() => {
+                                setSearch("");
+                                setSpeciesFilter("");
+                                setStatusFilter("");
+                            }}
+                            className="text-sm text-blue-600 hover:text-blue-800 underline"
+                        >
+                            Limpiar filtros
+                        </button>
+                    </div>
+                )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {animals.map((animal: any) => {
+                {filteredAnimals.map((animal: any) => {
                     const images = (animal.ipfsHashes || []).map(
                         (hash: string) => `https://gateway.pinata.cloud/ipfs/${hash}`
                     );
+                    const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/animal?id=${animal.id}` : '';
+                    
                     return (
                         <div
                             key={animal.id}
@@ -175,7 +261,7 @@ export default function AnimalList() {
                             <div className="p-4">
                                 <div className="mb-3">
                                     <h2 className="font-bold text-xl mb-2 text-gray-900">
-                                        <Link href={`/animal?id=${animal.id}`}>{animal.name}</Link>
+                                        <Link href={`/animal/${animal.id}`}>{animal.name}</Link>
                                     </h2>
                                     <div className="mb-2">
                                         {getStatusBadge(Number(animal.status))}
@@ -193,8 +279,53 @@ export default function AnimalList() {
                                         <span className="font-medium">Raza:</span> <span className="font-semibold">{animal.breed}</span>
                                     </p>
                                     <p>
-                                        <span className="font-medium">Descripción:</span> <span className="font-semibold">{animal.description}</span>
+                                        <span className="font-medium">Descripción:</span> 
+                                        <span className="font-semibold">
+                                            {animal.description.length > 50 
+                                                ? `${animal.description.substring(0, 50)}...` 
+                                                : animal.description
+                                            }
+                                        </span>
                                     </p>
+                                </div>
+
+                                {/* Botones de compartir */}
+                                <div className="mb-4">
+                                    <div className="flex gap-2 text-xs">
+                                        <a
+                                            href={`https://wa.me/?text=¡Mira a ${animal.name} en el Refugio Blockchain! ${shareUrl}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-green-600 hover:text-green-800 underline"
+                                        >
+                                            📱 WhatsApp
+                                        </a>
+                                        <a
+                                            href={`https://twitter.com/intent/tweet?text=¡Adopta a ${animal.name} en el Refugio Blockchain! ${shareUrl}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 hover:text-blue-800 underline"
+                                        >
+                                            🐦 Twitter
+                                        </a>
+                                        <button
+                                            onClick={() => {
+                                                if (navigator.share) {
+                                                    navigator.share({
+                                                        title: `Adopta a ${animal.name}`,
+                                                        text: `¡Mira a ${animal.name} en el Refugio Blockchain!`,
+                                                        url: shareUrl,
+                                                    });
+                                                } else {
+                                                    navigator.clipboard.writeText(shareUrl);
+                                                    alert('Enlace copiado');
+                                                }
+                                            }}
+                                            className="text-gray-600 hover:text-gray-800 underline"
+                                        >
+                                            🔗 Compartir
+                                        </button>
+                                    </div>
                                 </div>
 
                                 {/* Botones de acción */}
@@ -219,6 +350,12 @@ export default function AnimalList() {
                     );
                 })}
             </div>
+
+            {filteredAnimals.length === 0 && animals.length > 0 && (
+                <div className="text-center py-8 text-gray-500">
+                    No se encontraron animales con los filtros aplicados.
+                </div>
+            )}
 
             {/* Modal de adopción */}
             {selectedAnimal && (

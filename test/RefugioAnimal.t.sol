@@ -4,6 +4,8 @@ pragma solidity ^0.8.19;
 import "forge-std/Test.sol";
 import "../src/RefugioAnimal.sol";
 
+error OwnableUnauthorizedAccount(address account);
+
 contract RefugioAnimalTest is Test {
     RefugioAnimal public shelter;
     address public owner;
@@ -48,7 +50,9 @@ contract RefugioAnimalTest is Test {
         assertTrue(shelter.admins(admin));
 
         vm.prank(admin);
-        vm.expectRevert("Ownable: caller is not the owner");
+        vm.expectRevert(
+            abi.encodeWithSelector(OwnableUnauthorizedAccount.selector, admin)
+        );
         shelter.addAdmin(user1);
     }
 

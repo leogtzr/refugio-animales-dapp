@@ -2,13 +2,10 @@
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract RefugioAnimal is Ownable, ReentrancyGuard {
-    using Counters for Counters.Counter;
-
-    Counters.Counter private _animalIds;
+    uint256 private _animalIds;
 
     enum AnimalStatus {
         Available,
@@ -86,7 +83,7 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
         _;
     }
 
-    constructor() {
+    constructor() Ownable(msg.sender) {
         admins[msg.sender] = true;
         totalAnimalsRescued = 0;
         totalDonations = 0;
@@ -129,8 +126,8 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
         require(bytes(_name).length > 0, "Name cannot be empty");
         require(_ipfsHashes.length <= 3, "Maximum 3 IPFS hashes allowed");
 
-        _animalIds.increment();
-        uint256 newAnimalId = _animalIds.current();
+        _animalIds++;
+        uint256 newAnimalId = _animalIds;
 
         animals[newAnimalId] = Animal({
             id: newAnimalId,
@@ -272,9 +269,9 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
     }
 
     function getAllAnimals() external view returns (Animal[] memory) {
-        Animal[] memory allAnimals = new Animal[](_animalIds.current());
+        Animal[] memory allAnimals = new Animal[](_animalIds);
 
-        for (uint256 i = 1; i <= _animalIds.current(); i++) {
+        for (uint256 i = 1; i <= _animalIds; i++) {
             if (animals[i].exists) {
                 allAnimals[i - 1] = animals[i];
             }
@@ -287,7 +284,7 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
         uint256 availableCount = 0;
 
         // Contar animales disponibles
-        for (uint256 i = 1; i <= _animalIds.current(); i++) {
+        for (uint256 i = 1; i <= _animalIds; i++) {
             if (animals[i].exists && animals[i].status == AnimalStatus.Available) {
                 availableCount++;
             }
@@ -296,7 +293,7 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
         Animal[] memory availableAnimals = new Animal[](availableCount);
         uint256 currentIndex = 0;
 
-        for (uint256 i = 1; i <= _animalIds.current(); i++) {
+        for (uint256 i = 1; i <= _animalIds; i++) {
             if (animals[i].exists && animals[i].status == AnimalStatus.Available) {
                 availableAnimals[currentIndex] = animals[i];
                 currentIndex++;
@@ -317,7 +314,7 @@ contract RefugioAnimal is Ownable, ReentrancyGuard {
     }
 
     function getTotalAnimals() external view returns (uint256) {
-        return _animalIds.current();
+        return _animalIds;
     }
 
     function getUserDonations(address _user) external view returns (uint256[] memory) {
