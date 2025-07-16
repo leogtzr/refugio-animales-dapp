@@ -30,13 +30,10 @@ jobs:
       - name: Clean build and lib
         run: rm -rf out cache lib
 
-      - name: Update Foundry
-        run: foundryup
-
       - name: Install forge-std
         run: forge install foundry-rs/forge-std
 
-      - name: Install OpenZeppelin (4.x branch)
+      - name: Install OpenZeppelin (latest)
         run: forge install OpenZeppelin/openzeppelin-contracts
 
       - name: Remove all remappings.txt
